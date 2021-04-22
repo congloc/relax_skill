@@ -1,0 +1,17 @@
+{
+    "Auth": true,
+    "Withdraw": true,
+    "Deposit": true,
+    "User": false,
+    "Kyc": true,
+    "CopyTrade": true,
+    "AutoBot": true,
+    "Permission": false,
+    "Role": false,
+    "Setting": true,
+    "Wallet": true,
+    "Currency": true,
+    "Media": true,
+    "FeedBack": true,
+    "Callback": true
+}

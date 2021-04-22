@@ -1,0 +1,13 @@
+{
+    "name": "AutoBot",
+    "alias": "autobot",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AutoBot\\Providers\\AutoBotServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
