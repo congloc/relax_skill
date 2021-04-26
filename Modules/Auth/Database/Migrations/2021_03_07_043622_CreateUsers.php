@@ -23,6 +23,8 @@ class CreateUsers extends Migration
             $table->string('google2fa_secret')->nullable();
             $table->integer('google2fa_status')->default(0);
             $table->integer('status')->default(0);
+            $table->string('type');
+            $table->string('ref');
             $table->rememberToken();
             $table->timestamps();
         });

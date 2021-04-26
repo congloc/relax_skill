@@ -180,9 +180,10 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:32|unique:users|alpha_dash',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'username' => 'required|string|max:32',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+            'type' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -192,6 +193,13 @@ class AuthController extends Controller
             ], 200);
         }
         
+        if($request->type == '0' && !$request->has('ref')) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'Ref field can require'
+            ], 200);
+        }
+
         $sponsor_id = 0;
         if ($request->has('ref_id') && $request->ref_id != '') {
             $sponsor = DB::table('users')->where('ref_id', $request->ref_id)->first();
@@ -213,11 +221,13 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'status' => 0,
+            'type' => $request->type,
+            'ref' => $request->ref, 
             'google2fa_secret' => $twofa->createSecret()
         ]);
 
-        $code = encrypt($request->email);
-        Mail::to($request->email)->queue(new VerifyEmail($user,$code));
+        //$code = encrypt($request->email);
+        //Mail::to($request->email)->queue(new VerifyEmail($user,$code));
         
         return response()->json([
             'status' => 200,
