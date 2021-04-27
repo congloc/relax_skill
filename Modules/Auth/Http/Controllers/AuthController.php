@@ -226,8 +226,8 @@ class AuthController extends Controller
             'google2fa_secret' => $twofa->createSecret()
         ]);
 
-        //$code = encrypt($request->email);
-        //Mail::to($request->email)->queue(new VerifyEmail($user,$code));
+        $code = encrypt($request->email);
+        Mail::to($request->email)->queue(new VerifyEmail($user,$code));
         
         return response()->json([
             'status' => 200,
