@@ -1,7 +1,7 @@
 @component('mail::message')
 # Verify Your Email
 <div class="w-100">
-Code below to verify your account.
+Code below to verify your account.<br>
 </div>
 {{--  @component('mail::button', ['url' => url('api/auth/verify-email?token='.$code)])
     Verify
