@@ -212,6 +212,8 @@ class AuthController extends Controller
             $sponsor_id = $sponsor->id;
         }
 
+        $codeAuth = rand(100000,999999);
+
         $twofa = new Twofa();
         $user = User::create([
             'ref_id' => strtoupper(uniqid('R')),
@@ -222,7 +224,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'status' => 0,
             'type' => $request->type,
-            'ref' => $request->ref, 
+            'ref' => $request->ref,
+            'code' => $codeAuth, 
             'google2fa_secret' => $twofa->createSecret()
         ]);
 
