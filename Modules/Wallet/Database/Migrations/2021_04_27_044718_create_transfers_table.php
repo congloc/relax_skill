@@ -23,8 +23,8 @@ class CreateTransfersTable extends Migration
             $table->integer('fee');
             $table->integer('total');
             $table->integer('status');
-            $table->timestamps('created_at');
-            $table->timestamps('updated_at');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->timestamps();
         });
     }

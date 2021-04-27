@@ -20,8 +20,8 @@ class CreateTransfersWalletTable extends Migration
             $table->string('from_wallet');
             $table->string('to_wallet');
             $table->integer('status');
-            $table->timestamps('created_at');
-            $table->timestamps('updated_at');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->timestamps();
         });
     }

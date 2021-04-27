@@ -19,8 +19,8 @@ class CreateTransfersAddressTable extends Migration
             $table->string('symbol');
             $table->string('input_adress');
             $table->string('destination_tag');
-            $table->timestamps('created_at');
-            $table->timestamps('updated_at');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->timestamps();
         });
     }

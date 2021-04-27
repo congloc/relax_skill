@@ -27,8 +27,8 @@ class CreateWithdrawTable extends Migration
             $table->string('txhash');
             $table->integer('status');
             $table->string('author');
-            $table->timestamps('created_at');
-            $table->timestamps('updated_at');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->timestamps();
         });
     }
