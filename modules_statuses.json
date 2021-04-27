@@ -13,5 +13,6 @@
     "Currency": true,
     "Media": true,
     "FeedBack": true,
-    "Callback": true
+    "Callback": true,
+    "Profile": true
 }
