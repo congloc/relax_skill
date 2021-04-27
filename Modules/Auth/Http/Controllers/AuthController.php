@@ -312,16 +312,16 @@ class AuthController extends Controller
    }
 
     public function sendCodeForgotPassword(Request $request){
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|unique:users|email',
-        ]);
-        if ($validator->fails()) {
+        $token = $request->token;
+        $email = decrypt($token);
+        $user = DB::table('users')->where('email', $email)->first();
+        if(is_null($user)) {
             return response()->json([
                 'status' => 422,
-                'message' => $validator->errors()->first()
+                'message' => 'The user does not exist.',
             ], 200);
         }
-        $user = DB::table('users')->where('email', $request->email)->where('status', 0)->first();
+        $user = DB::table('users')->where('email', $email)->first();
         if (is_null($user)) {
             return response()->json([
                 'status' => 422,
