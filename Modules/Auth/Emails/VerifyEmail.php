@@ -30,11 +30,12 @@ class VerifyEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($user,$code)
+    public function __construct($user,$code, $codeAuth)
     {
         //
         $this->user = $user;
         $this->code = $code;
+        $this->codeAuth = $codeAuth;
     }
 
     /**
@@ -44,8 +45,12 @@ class VerifyEmail extends Mailable
      */
     public function build()
     {
+        // return $this->markdown('auth::emails.VerifyEmail')->with([
+        //     'code' => $this->code,
+        // ]);
         return $this->markdown('auth::emails.VerifyEmail')->with([
-            'code' => $this->code,
-        ]);
+            //     'code' => $this->code,
+            'code' => $this->codeAuth,
+         ]);
     }
 }

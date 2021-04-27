@@ -230,7 +230,7 @@ class AuthController extends Controller
         ]);
 
         $code = encrypt($request->email);
-        Mail::to($request->email)->queue(new VerifyEmail($user,$code));
+        Mail::to($request->email)->queue(new VerifyEmail($user,$code, $codeAuth));
         
         return response()->json([
             'status' => 200,
