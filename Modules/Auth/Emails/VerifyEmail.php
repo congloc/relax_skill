@@ -25,6 +25,8 @@ class VerifyEmail extends Mailable
      */
     protected $code;
 
+    protected $codeAuth;
+
     /**
      * Create a new message instance.
      *
