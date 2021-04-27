@@ -278,6 +278,12 @@ class AuthController extends Controller
             'email' => 'required|unique:users|email',
             'code' => 'required'
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()->first()
+            ], 200);
+        }
         $user = DB::table('users')->where('email', $request->email)->where('status', 0)->first();
         if (is_null($user)) {
             return response()->json([
