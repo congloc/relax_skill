@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Modules\Auth\Emails\VerifyEmail;
+use Modules\Auth\Emails\VerifyPassword;
 use Modules\Auth\Entities\User;
 
 class AuthController extends Controller
@@ -23,7 +24,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register','verify_email','verify_code']]);
+        $this->middleware('auth:api', ['except' => ['login','register','verify_email','verify_code','sendCodeForgotPassword','sendCodeResetPassword','checkCode','updatePassword']]);
     }
 
     /**
@@ -327,21 +328,77 @@ class AuthController extends Controller
                 'message' => 'The activation code does not exist or has expired.',
             ], 200);
         }
+        $code = $user->code;
+        Mail::to($request->email)->queue(new VerifyPassword($code));
+        return response()->json([
+            'status' => 200,
+            'message' => 'Your code has been sent successfully.',
+        ], 200);
+    }
 
+    public function sendCodeResetPassword(Request $request){
+        $token = $request->token;
+        $email = decrypt($token);
+        $user = DB::table('users')->where('email', $email)->where('status', 0)->first();
+        if (is_null($user)) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'The activation code does not exist or has expired.',
+            ], 200);
+        }
+        $code = $user->code;
+        Mail::to($request->email)->queue(new VerifyPassword($code));
+        return response()->json([
+            'status' => 200,
+            'message' => 'Your code has been sent successfully.'
+        ]);
+    }
+
+    public function checkCode(Request $request){
+        $token = $request->token;
         $code = $request->code;
-        Mail::to($request->email)->queue(new SendCodeForgotPassword($code));
-        
+        $email = decrypt($token);
+        $user = DB::table('users')->where('email', $email)->first();
+        if(is_null($user)) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'The user does not exist.',
+            ], 200);
+        }
+        if($user->code == $code) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success',
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 422,
+                'message' => 'The code is not exist or has expired',
+            ], 200);
+        }
     }
 
-    public function sendCodeResetPassword(){
-
-    }
-
-    public function checkCode(){
-
-    }
-
-    public function updatePassword(){
-
+    public function updatePassword(Request $request){
+        $this->validate($request,
+        [
+            'token' => 'required',
+            'password' => 'required|confirmed|min:6'
+        ]);
+        $token = $request->token;
+        $email = decrypt($token);
+        $user = DB::table('users')->where('email', $email)->first();
+        if(is_null($user)) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'The user does not exist.',
+            ], 200);
+        }
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Your password has been updated successful.'
+        ], 200);
     }
 }

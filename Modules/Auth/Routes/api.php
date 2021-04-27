@@ -24,4 +24,9 @@ Route::group([
     Route::post('register', 'AuthController@register');
     Route::get('verify-email', 'AuthController@verify_email');
     Route::post('verify-code', 'AuthController@verify_code');
+    Route::post('send-code-forgot-password', 'AuthController@sendCodeForgotPassword');
+    Route::post('send-code-reset-password', 'AuthController@sendCodeResetPassword');
+    Route::post('check-code', 'AuthController@checkCode');
+    Route::post('update-password', 'AuthController@updatePassword
+    ');
 });
