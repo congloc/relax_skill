@@ -308,5 +308,40 @@ class AuthController extends Controller
             'status' => 200,
             'message' => 'Your account has been actived successfully.',
         ], 200);
+   }
+
+    public function sendCodeForgotPassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|unique:users|email',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()->first()
+            ], 200);
+        }
+        $user = DB::table('users')->where('email', $request->email)->where('status', 0)->first();
+        if (is_null($user)) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'The activation code does not exist or has expired.',
+            ], 200);
+        }
+
+        $code = $request->code;
+        Mail::to($request->email)->queue(new SendCodeForgotPassword($code));
+        
+    }
+
+    public function sendCodeResetPassword(){
+
+    }
+
+    public function checkCode(){
+
+    }
+
+    public function updatePassword(){
+
     }
 }
