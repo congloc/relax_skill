@@ -272,4 +272,35 @@ class AuthController extends Controller
             'message' => 'Your account has been actived successfully.',
         ], 200);
     }
+
+    public function verify_code(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|unique:users|email',
+            'code' => 'required'
+        ]);
+        $user = DB::table('users')->where('email', $request->email)->where('status', 0)->first();
+        if (is_null($user)) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'The activation code does not exist or has expired.',
+            ], 200);
+        }
+
+        if($user->code != $request->code) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'The activation code does not matching',
+            ], 200);
+        }
+
+        DB::table('users')->where('email', $request->email)->update([
+            'status' => 1,
+            'email_verified_at' => date(now())
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Your account has been actived successfully.',
+        ], 200);
+    }
 }

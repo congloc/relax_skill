@@ -23,4 +23,5 @@ Route::group([
     Route::get('refresh', 'AuthController@refresh');
     Route::post('register', 'AuthController@register');
     Route::get('verify-email', 'AuthController@verify_email');
+    Route::post('verify-code', 'AuthController@verify_code');
 });
