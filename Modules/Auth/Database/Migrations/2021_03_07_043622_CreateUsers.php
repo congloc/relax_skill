@@ -25,7 +25,7 @@ class CreateUsers extends Migration
             $table->integer('status')->default(0);
             $table->string('type');
             $table->string('ref');
-            $table->integer('code')->nullable();
+            $table->integer('code')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
