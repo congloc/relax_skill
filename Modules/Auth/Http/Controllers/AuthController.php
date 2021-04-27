@@ -275,23 +275,10 @@ class AuthController extends Controller
 
     public function verify_code(Request $request) {
         $validator = Validator::make($request->all(), [
+            'email' => 'required|unique:users|email',
             'code' => 'required'
         ]);
-        $token = $request->token;
-        try {
-            $email = decrypt($token);
-        } catch (Exception $e) {
-            $email = null;
-        }
-
-        if (is_null($email)) {
-            return response()->json([
-                'status' => 422,
-                'message' => 'User does not exist',
-            ], 200);
-        }
-
-        $user = DB::table('users')->where('email', $email)->where('status', 0)->first();
+        $user = DB::table('users')->where('email', $request->email)->where('status', 0)->first();
         if (is_null($user)) {
             return response()->json([
                 'status' => 422,
@@ -306,7 +293,7 @@ class AuthController extends Controller
             ], 200);
         }
 
-        DB::table('users')->where('email', $email)->update([
+        DB::table('users')->where('email', $request->email)->update([
             'status' => 1,
             'email_verified_at' => date(now())
         ]);
