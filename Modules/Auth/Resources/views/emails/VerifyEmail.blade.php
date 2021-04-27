@@ -7,9 +7,7 @@ Code below to verify your account.
     Verify
 @endcomponent  --}}
 
-@component('mail::button')
-    $code
-@endcomponent
+Your code: $code
 
 {{--  If you can't open link on the button. Please connect to below link 
 <div class="w-100">
