@@ -8,7 +8,6 @@
  * 
  * @apiSuccessExample {type} Success-Response:
     {
-    "status": 200,
     "message": "Get data is success.",
     "data": {
         "id": 17,

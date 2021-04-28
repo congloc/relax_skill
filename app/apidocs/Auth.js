@@ -20,7 +20,6 @@
  * 
  * @apiSuccessExample {type} Success-Response:
     {
-        "status": 200,
         "message": "Please check your email to verify account by activation code"
     }
  */
@@ -52,7 +51,6 @@
  * 
  * @apiSuccessExample {type} Success-Response:
     {
-        "status": 200,
         "message": 'Your account has been actived successfully.',
     }
  */
@@ -67,7 +65,6 @@
  * 
  * @apiSuccessExample {type} Success-Response:
     {
-        "status": 200,
         "message": 'Your code has been sent successfully.',
     }
  */
@@ -83,7 +80,6 @@
  * 
  * @apiSuccessExample {type} Success-Response:
     {
-        "status": 200,
         "message": 'Your code has been sent successfully.',
     }
  */
@@ -98,7 +94,6 @@
  * 
  * @apiSuccessExample {type} Success-Response:
     {
-        "status": 200,
         "message": 'Success',
     }
  */
@@ -113,7 +108,6 @@
  * 
  * @apiSuccessExample {type} Success-Response:
     {
-        "status": 200,
         "message": 'Your password has been updated successful.',
     }
  */
