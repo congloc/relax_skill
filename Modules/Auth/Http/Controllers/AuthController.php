@@ -353,7 +353,7 @@ class AuthController extends Controller
     }
 
     public function checkCode(Request $request){
-        $code = $request->code;
+	$code = $request->code;
         $email = $request->email;
         $user = DB::table('users')->where('email', $email)->first();
         if(is_null($user)) {
