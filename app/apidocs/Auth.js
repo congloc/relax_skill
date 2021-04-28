@@ -53,6 +53,6 @@
  * @apiSuccessExample {type} Success-Response:
     {
         "status": 200,
-        "message": "The activation code does not exist or has expired."
+        "message": 'Your account has been actived successfully.',
     }
  */
