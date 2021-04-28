@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/profile', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/profile', function (Request $request) {
+//     return $request->user();
+// });
+Route::group(['middleware' => ['jwt.auth']], function() {
+    Route::get('/profile', 'ProfileController@getProfile');
 });
