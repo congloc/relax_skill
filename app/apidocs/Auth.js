@@ -73,6 +73,20 @@
  */
 
  
+ /**
+ * @api {post} /api/auth/send-code-reset-password Send mail reset password
+ * @apiName send-code-reset-password
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * 
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Your code has been sent successfully.',
+    }
+ */
 
 /**
  * @api {post} /api/auth/check-code Check Code
