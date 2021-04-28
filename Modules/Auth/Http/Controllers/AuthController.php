@@ -41,31 +41,27 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 422,
                 'message' => $validator->errors()->first()
-            ], 200);
+            ], 422);
         }
 
         $user = User::where('username', $request->username)->first();
         if (is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'Email or Password is not valid.',
-            ], 200);
+            ], 422);
         }
 
         if (!$user->status) {
             return response()->json([
-                'status' => 422,
                 'message' => 'Your account is not verified email.',
-            ], 200);
+            ], 422);
         }
 
         if ($user->status == 2) {
             return response()->json([
-                'status' => 422,
                 'message' => 'Your account has been banned.',
-            ], 200);
+            ], 422);
         }
 
         $credentials = ['username' => $request->username, 'password' => $request->password];
@@ -81,15 +77,13 @@ class AuthController extends Controller
         try {
             if (!$token) {
                 return response()->json([
-                    'status' => 422,
                     'message' => 'Email or Password is not valid.'
-                ], 200);
+                ], 422);
             }
         } catch (Exception $e) {
             return response()->json([
-                'status' => 422,
                 'message' => 'failed_to_create_token'
-            ], 200);
+            ], 422);
         }
 
         if (!$protectKey) {
@@ -98,16 +92,14 @@ class AuthController extends Controller
                 $valid = $twofa->verifyCode($user->google2fa_secret, $request->twofa_code);
                 if (!$valid) {
                     return response()->json([
-                        'status' => 422,
                         'message' => 'The two factor authentication code is invalid',
-                    ]);
+                    ],422);
                 }
             } else {
                 if ($user->google2fa_enable) {
                     return response()->json([
-                        'status' => 401,
                         'message' => '2FA Authorization'
-                    ]);
+                    ],401);
                 }
             }
         }
@@ -189,16 +181,14 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 422,
                 'message' => $validator->errors()->first()
-            ], 200);
+            ], 422);
         }
         
         if($request->type == '0' && !$request->has('ref')) {
             return response()->json([
-                'status' => 422,
                 'message' => 'Ref field can require'
-            ], 200);
+            ], 422);
         }
 
         $sponsor_id = 0;
@@ -206,9 +196,8 @@ class AuthController extends Controller
             $sponsor = DB::table('users')->where('ref_id', $request->ref_id)->first();
             if (is_null($sponsor)) {
                 return response()->json([
-                    'status' => 422,
                     'message' => 'The sponsor id does not exist.',
-                ], 200);
+                ], 422);
             }
             $sponsor_id = $sponsor->id;
         }
@@ -234,7 +223,6 @@ class AuthController extends Controller
         Mail::to($request->email)->queue(new VerifyEmail($user,$code, $codeAuth));
         
         return response()->json([
-            'status' => 200,
             'message' => 'Please check your email to verify account by activation code',
         ], 200);
     }
@@ -250,17 +238,15 @@ class AuthController extends Controller
 
         if (is_null($email)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The activation link does not exist or has expired.',
-            ], 200);
+            ], 422);
         }
 
         $user = DB::table('users')->where('email', $email)->where('status', 0)->first();
         if (is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The activation link does not exist or has expired.',
-            ], 200);
+            ], 422);
         }
 
         DB::table('users')->where('email', $email)->update([
@@ -269,7 +255,6 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'status' => 200,
             'message' => 'Your account has been actived successfully.',
         ], 200);
     }
@@ -281,23 +266,20 @@ class AuthController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json([
-                'status' => 422,
                 'message' => $validator->errors()->first()
-            ], 200);
+            ], 422);
         }
         $user = DB::table('users')->where('email', $request->email)->where('status', 0)->first();
         if (is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The activation code does not exist or has expired.',
-            ], 200);
+            ], 422);
         }
 
         if($user->code != $request->code) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The activation code does not matching',
-            ], 200);
+            ], 422);
         }
 
         DB::table('users')->where('email', $request->email)->update([
@@ -306,98 +288,86 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'status' => 200,
             'message' => 'Your account has been actived successfully.',
         ], 200);
    }
 
     public function sendCodeForgotPassword(Request $request){
-        $token = $request->token;
-        $email = decrypt($token);
+        $email = $request->email;
         $user = DB::table('users')->where('email', $email)->first();
         if(is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The user does not exist.',
-            ], 200);
+            ], 422);
         }
         $user = DB::table('users')->where('email', $email)->first();
         if (is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The activation code does not exist or has expired.',
-            ], 200);
+            ], 422);
         }
         $code = $user->code;
         Mail::to($request->email)->queue(new VerifyPassword($code));
         return response()->json([
-            'status' => 200,
             'message' => 'Your code has been sent successfully.',
         ], 200);
     }
 
     public function sendCodeResetPassword(Request $request){
-        $token = $request->token;
-        $email = decrypt($token);
-        $user = DB::table('users')->where('email', $email)->where('status', 0)->first();
+        $email = $request->email;
+        $user = DB::table('users')->where('email', $email)->first();
         if (is_null($user)) {
             return response()->json([
-                'status' => 422,
-                'message' => 'The activation code does not exist or has expired.',
-            ], 200);
+                'message' => 'Email does not exist',
+            ], 422);
         }
         $code = $user->code;
         Mail::to($request->email)->queue(new VerifyPassword($code));
         return response()->json([
-            'status' => 200,
             'message' => 'Your code has been sent successfully.'
-        ]);
+        ],200);
     }
 
     public function checkCode(Request $request){
-        $token = $request->token;
-        $code = $request->code;
-        $email = decrypt($token);
+	$code = $request->code;
+        $email = $request->email;
         $user = DB::table('users')->where('email', $email)->first();
         if(is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The user does not exist.',
-            ], 200);
+            ], 422);
         }
         if($user->code == $code) {
             return response()->json([
-                'status' => 200,
                 'message' => 'Success',
             ], 200);
         } else {
             return response()->json([
-                'status' => 422,
                 'message' => 'The code is not exist or has expired',
-            ], 200);
+            ], 422);
         }
     }
 
     public function updatePassword(Request $request){
-        $this->validate($request,
-        [
-            'token' => 'required',
-            'password' => 'required|confirmed|min:6'
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:6'
         ]);
-        $token = $request->token;
-        $email = decrypt($token);
-        $user = DB::table('users')->where('email', $email)->first();
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()->first()
+            ], 422);
+        }
+        $email = $request->email;
+        $user = DB::table('users')->where('email', $email)->limit(1);
         if(is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'The user does not exist.',
-            ], 200);
+            ], 422);
         }
         $user->update([
             'password' => Hash::make($request->password),
         ]);
         return response()->json([
-            'status' => 200,
             'message' => 'Your password has been updated successful.'
         ], 200);
     }

@@ -27,6 +27,5 @@ Route::group([
     Route::post('send-code-forgot-password', 'AuthController@sendCodeForgotPassword');
     Route::post('send-code-reset-password', 'AuthController@sendCodeResetPassword');
     Route::post('check-code', 'AuthController@checkCode');
-    Route::post('update-password', 'AuthController@updatePassword
-    ');
+    Route::post('update-password', 'AuthController@updatePassword');
 });

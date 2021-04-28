@@ -42,4 +42,78 @@
  * 
  */
 
+/**
+ * @api {post} /api/auth/verify-code Verify Code
+ * @apiName verify-code
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * @apiParam  {String} code Code
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Your account has been actived successfully.',
+    }
+ */
 
+ /**
+ * @api {post} /api/auth/send-code-forgot-password Send mail forget password
+ * @apiName send-code-forgot-password
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * 
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Your code has been sent successfully.',
+    }
+ */
+
+ 
+ /**
+ * @api {post} /api/auth/send-code-reset-password Send mail reset password
+ * @apiName send-code-reset-password
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * 
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Your code has been sent successfully.',
+    }
+ */
+
+/**
+ * @api {post} /api/auth/check-code Check Code
+ * @apiName check-code
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * @apiParam  {String} code Code
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Success',
+    }
+ */
+
+ /**
+ * @api {post} /api/auth/update-password Update password
+ * @apiName update password
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * @apiParam  {String} password Password
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Your password has been updated successful.',
+    }
+ */
