@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Wallet\Http\Controllers;
+namespace Modules\Order\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class WalletController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class WalletController extends Controller
      */
     public function index()
     {
-        return view('wallet::index');
+        return view('order::index');
     }
 
     /**
@@ -23,17 +23,9 @@ class WalletController extends Controller
      */
     public function create()
     {
-        return view('wallet::create');
+        return view('order::create');
     }
 
-    public function createWallet(Request $request){
-
-    }
-
-    public function getWallet(Request $request){
-
-    }
-    
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -51,7 +43,7 @@ class WalletController extends Controller
      */
     public function show($id)
     {
-        return view('wallet::show');
+        return view('order::show');
     }
 
     /**
@@ -61,7 +53,7 @@ class WalletController extends Controller
      */
     public function edit($id)
     {
-        return view('wallet::edit');
+        return view('order::edit');
     }
 
     /**
