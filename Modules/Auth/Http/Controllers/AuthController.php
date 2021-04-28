@@ -376,10 +376,16 @@ class AuthController extends Controller
     }
 
     public function updatePassword(Request $request){
-        $this->validate($request,
+        $validator = $this->validate($request,
         [
-            'password' => 'required|confirmed|min:6'
+            'password' => 'required|min:6'
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()->first()
+            ], 200);
+        }
         $email = $request->email;
         $user = DB::table('users')->where('email', $email)->first();
         if(is_null($user)) {
