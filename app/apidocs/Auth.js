@@ -42,4 +42,17 @@
  * 
  */
 
-
+/**
+ * @api {post} /api/auth/verify-code Verify Code
+ * @apiName verify-code
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * @apiParam  {String} code Code
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": "The activation code does not exist or has expired."
+    }
+ */
