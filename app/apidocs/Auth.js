@@ -88,3 +88,18 @@
         "message": 'Success',
     }
  */
+
+ /**
+ * @api {post} /api/auth/update-password Update password
+ * @apiName update password
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * @apiParam  {String} password Password
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Your password has been updated successful.',
+    }
+ */
