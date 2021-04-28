@@ -312,8 +312,7 @@ class AuthController extends Controller
    }
 
     public function sendCodeForgotPassword(Request $request){
-        $token = $request->token;
-        $email = decrypt($token);
+        $email = $request->email;
         $user = DB::table('users')->where('email', $email)->first();
         if(is_null($user)) {
             return response()->json([
@@ -337,8 +336,7 @@ class AuthController extends Controller
     }
 
     public function sendCodeResetPassword(Request $request){
-        $token = $request->token;
-        $email = decrypt($token);
+        $email = $request->email;
         $user = DB::table('users')->where('email', $email)->where('status', 0)->first();
         if (is_null($user)) {
             return response()->json([
@@ -355,9 +353,8 @@ class AuthController extends Controller
     }
 
     public function checkCode(Request $request){
-        $token = $request->token;
         $code = $request->code;
-        $email = decrypt($token);
+        $email = $request->email;
         $user = DB::table('users')->where('email', $email)->first();
         if(is_null($user)) {
             return response()->json([
@@ -381,11 +378,9 @@ class AuthController extends Controller
     public function updatePassword(Request $request){
         $this->validate($request,
         [
-            'token' => 'required',
             'password' => 'required|confirmed|min:6'
         ]);
-        $token = $request->token;
-        $email = decrypt($token);
+        $email = $request->email;
         $user = DB::table('users')->where('email', $email)->first();
         if(is_null($user)) {
             return response()->json([
