@@ -376,8 +376,7 @@ class AuthController extends Controller
     }
 
     public function updatePassword(Request $request){
-        $validator = $this->validate($request,
-        [
+        $validator = Validator::make($request->all(), [
             'password' => 'required|min:6'
         ]);
         if ($validator->fails()) {
