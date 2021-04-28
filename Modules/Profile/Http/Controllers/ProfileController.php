@@ -23,12 +23,10 @@ class ProfileController extends Controller
         $user = Auth::user();
         if (is_null($user)) {
             return response()->json([
-                'status' => 422,
                 'message' => 'Email or Password is not valid.',
-            ], 200);
+            ], 422);
         }
         return response()->json([
-            'status' => 200,
             'message' => 'Get data is success.',
             'data' => $user
         ], 200);
