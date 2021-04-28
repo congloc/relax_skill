@@ -386,7 +386,7 @@ class AuthController extends Controller
             ], 200);
         }
         $email = $request->email;
-        $user = DB::table('users')->where('email', $email)->first();
+        $user = DB::table('users')->where('email', $email)->limit(1);
         if(is_null($user)) {
             return response()->json([
                 'status' => 422,
