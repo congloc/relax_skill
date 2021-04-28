@@ -337,11 +337,11 @@ class AuthController extends Controller
 
     public function sendCodeResetPassword(Request $request){
         $email = $request->email;
-        $user = DB::table('users')->where('email', $email)->where('status', 0)->first();
+        $user = DB::table('users')->where('email', $email)->first();
         if (is_null($user)) {
             return response()->json([
                 'status' => 422,
-                'message' => 'The activation code does not exist or has expired.',
+                'message' => 'Email does not exist',
             ], 200);
         }
         $code = $user->code;
