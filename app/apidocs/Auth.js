@@ -56,3 +56,35 @@
         "message": 'Your account has been actived successfully.',
     }
  */
+
+ /**
+ * @api {post} /api/auth/send-code-forgot-password Send mail forget password
+ * @apiName send-code-forgot-password
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * 
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Your code has been sent successfully.',
+    }
+ */
+
+ 
+
+/**
+ * @api {post} /api/auth/check-code Check Code
+ * @apiName check-code
+ * @apiGroup Auth
+ * 
+ * @apiParam  {String} email Email
+ * @apiParam  {String} code Code
+ * 
+ * @apiSuccessExample {type} Success-Response:
+    {
+        "status": 200,
+        "message": 'Success',
+    }
+ */
