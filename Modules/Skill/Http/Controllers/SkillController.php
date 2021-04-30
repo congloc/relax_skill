@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse as HttpJsonResponse;
 
 class SkillController extends Controller
 {
-    /**
+    /***
      * Display a listing of the resource.
      * @return Renderable
      */
