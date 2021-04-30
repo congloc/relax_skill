@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWardsTable extends Migration
+class CreateSkillsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateWardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wards', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('skills', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->bigInteger('province_id')->unsigned();            
-            $table->timestamps();
         });
     }
 
@@ -28,8 +26,6 @@ class CreateWardsTable extends Migration
      */
     public function down()
     {
-        Schema::table('wards', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('skills');
     }
 }

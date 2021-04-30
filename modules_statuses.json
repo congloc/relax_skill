@@ -14,5 +14,6 @@
     "Media": true,
     "FeedBack": true,
     "Callback": true,
-    "Profile": true
+    "Profile": true,
+    "Skill": true
 }
