@@ -15,5 +15,6 @@
     "FeedBack": true,
     "Callback": true,
     "Profile": true,
-    "Skill": true
+    "Skill": true,
+    "Rate": true
 }
